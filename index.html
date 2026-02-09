@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For Khushi ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff4b6e,#ff9a9e);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* card */
+.card{
+    width:360px;
+    background:white;
+    padding:18px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,0.35);
+}
+
+/* ⭐ colorful frame */
+.slider{
+    height:300px;
+    border-radius:18px;
+    border:8px solid white;
+    background:linear-gradient(45deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+.slider img{
+    max-width:100%;
+    max-height:100%;
+    position:absolute;
+    opacity:0;
+    transition:1s;
+}
+.slider img.active{opacity:1;}
+
+/* heart rain */
+.photoHeart{
+    position:absolute;
+    font-size:18px;
+    animation:rain 3s linear forwards;
+}
+@keyframes rain{
+    from{transform:translateY(-20px);}
+    to{transform:translateY(320px);opacity:0;}
+}
+
+/* popup */
+.popup{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.25);
+    padding:25px;
+    border-radius:20px;
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    text-shadow:0 2px 5px black;
+    transition:.4s;
+    z-index:10;
+}
+.popup.show{
+    transform:translate(-50%,-50%) scale(1);
+}
+
+/* buttons */
+button{
+    padding:8px 16px;
+    border:none;
+    border-radius:20px;
+    background:#ff2e63;
+    color:white;
+    margin:5px;
+    cursor:pointer;
+}
+
+/* fireworks */
+.fire{
+    position:absolute;
+    font-size:28px;
+    animation:explode 1s ease-out forwards;
+}
+@keyframes explode{
+    to{
+        transform:translate(var(--x),var(--y));
+        opacity:0;
+    }
+}
+
+/* ⭐ ONE SINGLE BIG HEART (center only) */
+.bigHeart{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:160px;
+    animation:beat 1s infinite;
+    display:none;
+    z-index:5;
+}
+@keyframes beat{
+    50%{transform:translate(-50%,-50%) scale(1.35);}
+}
+
+/* ⭐ FINAL CLEAR TEXT */
+.finalText{
+    position:fixed;
+    top:65%;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:24px;
+    font-weight:bold;
+    color:white;
+    text-align:center;
+    z-index:6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<!-- ❌ removed Happy Valentine text -->
+
+<p>From Prabhash 💌</p>
+
+<div class="slider" id="slider">
+<img src="1.jpg" class="active">
+<img src="2.jpg">
+<img src="3.jpg">
+<img src="4.jpg">
+<img src="5.jpg">
+<img src="6.jpg">
+<img src="7.jpg">
+</div>
+
+<button onclick="nextStep()">Next ❤️</button>
+
+</div>
+
+<div class="popup" id="popup"></div>
+<div class="bigHeart" id="bigHeart">❤️</div>
+
+<audio autoplay loop>
+<source src="music.mp3">
+</audio>
+
+<script>
+
+/* slideshow */
+let slides=document.querySelectorAll(".slider img");
+let i=0;
+let sliderInterval=setInterval(()=>{
+    slides[i].classList.remove("active");
+    i=(i+1)%slides.length;
+    slides[i].classList.add("active");
+},2200);
+
+/* heart rain */
+let slider=document.getElementById("slider");
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.innerHTML="❤️";
+    h.className="photoHeart";
+    h.style.left=Math.random()*100+"%";
+    slider.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+},300);
+
+/* fireworks */
+function firework(count){
+for(let i=0;i<count;i++){
+    let f=document.createElement("div");
+    f.innerHTML="💖";
+    f.className="fire";
+    f.style.left="50vw";
+    f.style.top="50vh";
+    let x=(Math.random()-0.5)*600+"px";
+    let y=(Math.random()-0.5)*600+"px";
+    f.style.setProperty("--x",x);
+    f.style.setProperty("--y",y);
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+}
+}
+
+/* steps */
+let step=0;
+
+function nextStep(){
+
+let popup=document.getElementById("popup");
+popup.classList.add("show");
+
+step++;
+
+if(step==1){
+popup.innerHTML="KHUSHI ❤️ Tum meri life ki sabse badi happiness ho 🥰";
+}
+else if(step==2){
+popup.innerHTML="Tumhari smile hi meri duniya hai ✨💕";
+}
+else if(step==3){
+popup.innerHTML="I Love You KHUSHI ❤️ Forever & Always 😘";
+}
+else{
+popup.innerHTML=`
+<h3>Will You Be Mine Forever? 💍</h3>
+<button onclick="yesLove()">YES ❤️</button>
+<button id="noBtn">NO 😜</button>
+`;
+
+let no=document.getElementById("noBtn");
+no.onmouseover=function(){
+    no.style.position="relative";
+    no.style.left=(Math.random()*120-60)+"px";
+}
+}
+
+firework(20);
+}
+
+
+/* ⭐ YES CLICK */
+function yesLove(){
+
+document.getElementById("popup").style.display="none";
+document.getElementById("slider").style.display="none";
+clearInterval(sliderInterval);
+
+/* show one heart */
+document.getElementById("bigHeart").style.display="block";
+
+/* final clean text */
+let t=document.createElement("div");
+t.className="finalText";
+t.innerHTML=`
+She said YES ❤️ <br>
+Now my world is complete ✨ <br>
+Because I finally have my Khushi forever 💕
+`;
+document.body.appendChild(t);
+
+/* fireworks */
+setInterval(()=>firework(70),900);
+}
+</script>
+
+</body>
+</html>
